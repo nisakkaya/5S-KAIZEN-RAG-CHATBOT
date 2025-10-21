@@ -89,6 +89,19 @@ Google Colab, LangChain, Chroma, Google Gemini API, pdfplumber, Gradio
 3. "🚀 Gönder" butonuna basın.  
 4. Chatbot yanıtını görüntüleyin.
 
+<h2 style="color:#1F4E79;">📊 Elde Edilen Sonuçlar</h2>
+
+<p>Bu projede geliştirdiğimiz RAG tabanlı chatbot ile 5S ve Kaizen içerikli PDF veri setinden bilgi çekerek kullanıcı sorularına bağlamsal yanıtlar üretebiliyoruz. Özet olarak:</p>
+
+<ul>
+<li>✅ **Bağlamsal Yanıt Üretimi:** Kullanıcı soruları, PDF içeriği üzerinden en uygun chunk’lar referans alınarak yanıtlanıyor.</li>
+<li>✅ **Doğru ve Hedefe Yönelik Bilgi:** Basitten zorlayıcıya sorulara karşılık doğru ve bağlamsal yanıtlar sağlanıyor.</li>
+<li>✅ **Hızlı ve Etkileşimli:** Gradio arayüzü sayesinde sorular anında cevaplanabiliyor.</li>
+<li>✅ **Kolay Deploy ve Paylaşım:** Colab veya Hugging Face Spaces üzerinden hızlıca erişim sağlanabiliyor.</li>
+<li>✅ **Ölçeklenebilir Mimari:** PDF’ler ve veri setleri büyütüldükçe Chroma + RAG pipeline ile chatbot performansı korunuyor.</li>
+</ul>
+
+<p>💡 Özetle, proje hem **eğitsel bir araç** hem de **5S & Kaizen bilgi tabanı** olarak kullanılabilir. Kullanıcılar sorularına **doğru, hızlı ve bağlamsal yanıtlar** alabiliyor, bu da gerçek bir dijital asistan deneyimi sunuyor.</p>
 
 
 
