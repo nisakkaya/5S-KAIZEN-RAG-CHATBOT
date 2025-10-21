@@ -42,27 +42,28 @@ Kullanılan veri seti: **The Ultimate Guide to 5S and 5S Training _ KAIZEN™ Ar
 
 
 
-## 💡 Örnek Sorular (Basitten Zora)
+## **💡 Örnek Sorular (Basitten Zora)**
+
 
 Bu sorular, chatbot’u test etmek ve 5S & Kaizen konusundaki bilgi tabanını göstermek için kullanılabilir.
 
-### Basit Sorular
+### **Basit Sorular**
 - 5S nedir?  
 - Kaizen metodolojisi neyi amaçlar?  
 - 5S’in adımları nelerdir?
 
-### Orta Seviye Sorular
+### **Orta Seviye Sorular**
 - 5S uygulamasında en sık yapılan hatalar nelerdir?  
 - Kaizen felsefesini üretim süreçlerine nasıl entegre edebiliriz?  
 - 5S ile iş yeri düzeni ve verimlilik arasındaki ilişki nedir?
 
-### Zorlayıcı Sorular
+### **Zorlayıcı Sorular**
 - Kaizen ve 5S yöntemlerini aynı anda uygularken yaşanan çatışma noktaları nelerdir ve nasıl çözülür?  
 - Bir fabrikanın mevcut süreçlerinde 5S ve Kaizen uygulamalarını optimize etmek için önerdiğiniz somut adımlar nelerdir?  
 - 5S & Kaizen çerçevesinde bir çalışan motivasyon programı nasıl tasarlanır ve ölçümlenir?
 
 
-## 🏗 Çözüm Mimarisi
+## 🏗 **Çözüm Mimarisi**
 
 **Pipeline Adımları:**
 
@@ -76,7 +77,7 @@ Google Colab, LangChain, Chroma, Google Gemini API, pdfplumber, Gradio
 
 ---
 
-## 🌐 Web Arayüzü & Deploy
+## 🌐 **Web Arayüzü & Deploy**
 
 - **Arayüz:** Gradio Blocks  
 - **Deploy Linki:** [Buraya deploy linkinizi ekleyin]
