@@ -33,43 +33,63 @@ Kullanılan veri seti: **The Ultimate Guide to 5S and 5S Training _ KAIZEN™ Ar
 
 ## ⚙️ Kurulum ve Çalıştırma Kılavuzu
 
-1. Repository'yi klonlayın:  
-```bash
-git clone https://github.com/nisakkaya/5S-KAIZEN-RAG-CHATBOT.git
-cd proje_reposu
-
-
-🏗 Çözüm Mimarisi
-
-Pipeline Adımları:
-
-Soru Alımı: Kullanıcı Gradio arayüzünden sorusunu girer.
-
-Embedding & Retrieval: Sorular embedding modeline gönderilir ve PDF chunk’ları üzerinden en benzer içerikler getirilir.
-
-Yanıt Üretimi: Retrieval sonuçları generation modeline iletilir ve yanıt üretilir.
-
-Web Arayüzü: Üretilen yanıt Gradio üzerinden kullanıcıya sunulur.
-
-Teknolojiler: Python, LangChain, Chroma, Google Gemini API, pdfplumber, Gradio
-
-🌐 Web Arayüzü & Deploy
-
-Arayüz: Gradio Blocks
-
-Deploy Linki:
+1. Colab notebook’unuzu açın.  
+2. Gerekli kütüphaneleri yükleyin:
+```python
+!pip install -q pdfplumber tqdm chromadb google-generativeai numpy langchain gradio
 
 
 
-Kullanım Adımları:
 
-Web sayfasına gidin.
 
-Soru kutusuna sorularınızı yazın.
+## 💡 Örnek Sorular (Basitten Zora)
 
-"🚀 Gönder" butonuna basın.
+Bu sorular, chatbot’u test etmek ve 5S & Kaizen konusundaki bilgi tabanını göstermek için kullanılabilir.
 
-Chatbot yanıtını görüntüleyin.
+### Basit Sorular
+- 5S nedir?  
+- Kaizen metodolojisi neyi amaçlar?  
+- 5S’in adımları nelerdir?
+
+### Orta Seviye Sorular
+- 5S uygulamasında en sık yapılan hatalar nelerdir?  
+- Kaizen felsefesini üretim süreçlerine nasıl entegre edebiliriz?  
+- 5S ile iş yeri düzeni ve verimlilik arasındaki ilişki nedir?
+
+### Zorlayıcı Sorular
+- Kaizen ve 5S yöntemlerini aynı anda uygularken yaşanan çatışma noktaları nelerdir ve nasıl çözülür?  
+- Bir fabrikanın mevcut süreçlerinde 5S ve Kaizen uygulamalarını optimize etmek için önerdiğiniz somut adımlar nelerdir?  
+- 5S & Kaizen çerçevesinde bir çalışan motivasyon programı nasıl tasarlanır ve ölçümlenir?
+
+
+## 🏗 Çözüm Mimarisi
+
+**Pipeline Adımları:**
+
+1. **Soru Alımı:** Kullanıcı Gradio arayüzünden sorusunu girer.  
+2. **Embedding & Retrieval:** Sorular embedding modeline gönderilir ve PDF chunk’ları üzerinden en benzer içerikler getirilir.  
+3. **Yanıt Üretimi:** Retrieval sonuçları generation modeline iletilir ve yanıt üretilir.  
+4. **Web Arayüzü:** Üretilen yanıt Gradio üzerinden kullanıcıya sunulur.  
+
+**Kullanılan Teknolojiler:**  
+Google Colab, LangChain, Chroma, Google Gemini API, pdfplumber, Gradio
+
+---
+
+## 🌐 Web Arayüzü & Deploy
+
+- **Arayüz:** Gradio Blocks  
+- **Deploy Linki:** [Buraya deploy linkinizi ekleyin]
+
+**Kullanım Adımları:**
+
+1. Web sayfasına gidin.  
+2. Soru kutusuna sorularınızı yazın.  
+3. "🚀 Gönder" butonuna basın.  
+4. Chatbot yanıtını görüntüleyin.
+
+
+
 
 
 
