@@ -112,7 +112,7 @@ Google Colab, LangChain, Chroma, Google Gemini API, pdfplumber, Gradio
 
 Arayüz: Gradio Blocks
 
-Deploy Linki: [Buraya deploy linkinizi ekleyin]
+Deploy Linki: https://huggingface.co/spaces/nisakkaya/5S-CHATBOT-NISA linkten chatbotuma ualaşabilirsiniz.
 
 Kullanım Adımları:
 
