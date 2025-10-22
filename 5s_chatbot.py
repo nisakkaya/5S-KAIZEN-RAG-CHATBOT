@@ -29,16 +29,9 @@ genai.configure(api_key=API_KEY)
 EMBED_MODEL = "models/text-embedding-004"
 LLM_MODEL = "models/gemini-2.5-flash"
 
-# ============================================
-# 3️⃣ PDF'i oku ve chunk'lara böl
-# ============================================
-# PDF oku
-# 1️⃣ Google Drive'ı bağla
-from google.colab import drive
-drive.mount('/content/drive')
 
 # 2️⃣ PDF dosya yolunu ayarla
-pdf_path = "/content/The Ultimate Guide to 5S and 5S Training _ KAIZEN™ Article.pdf"
+pdf_path = pdf_path = 'The Ultimate Guide to 5S and 5S Training _ KAIZEN™ Article.pdf'
 
 # 3️⃣ PDF'i oku ve chunk'lara böl
 import pdfplumber
