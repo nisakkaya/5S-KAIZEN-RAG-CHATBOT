@@ -1,109 +1,145 @@
-# 💬 5S & Kaizen Öğretici Chatbot – Akbank GenAI Bootcamp
+💬 5S & Kaizen Öğretici Chatbot – Akbank GenAI Bootcamp
+🚀 Projenin Amacı
 
-## 🚀 Projenin Amacı
-Bu proje, **RAG (Retrieval Augmented Generation)** mimarisi kullanarak kullanıcı sorularına doğru ve bağlamsal yanıtlar üretebilen bir chatbot geliştirmeyi amaçlamaktadır.  
-Amaç, 5S ve Kaizen metodolojileri ile ilgili bilgileri **dinamik ve bağlamsal olarak** sunabilen, güvenilir bir dijital asistan oluşturmaktır.
+Bu proje, RAG (Retrieval Augmented Generation) mimarisi kullanarak kullanıcı sorularına doğru ve bağlamsal yanıtlar üretebilen bir chatbot geliştirmeyi amaçlamaktadır.
+Amaç, 5S ve Kaizen metodolojileri ile ilgili bilgileri dinamik ve güvenilir bir şekilde sunabilen dijital bir asistan oluşturmaktır.
 
----
+📄 Veri Seti Hakkında
 
-## 📄 Veri Seti Hakkında
-Kullanılan veri seti: **The Ultimate Guide to 5S and 5S Training _ KAIZEN™ Article.pdf**  
+Kaynak: Kaizen Institute – The Ultimate Guide to 5S and 5S Training (KAIZEN™ Article)
 
-- **Format:** PDF  
-- **İçerik:** 5S ve Kaizen uygulamaları ile ilgili dokümanlar  
-- **Kullanım:** Chatbot, kullanıcı sorularına yanıt üretmek için PDF içeriklerini referans alır  
+Dil: İngilizce
 
-> ⚠️ Not: Veri seti ve API Key repoya dahil edilmemiştir. Kod çalıştırıldığında PDF dosyası Colab veya lokal ortamda kullanılmalıdır.
+Kapsam: 5S adımları, uygulama yöntemleri, Kaizen felsefesi ve iş yeri verimliliği üzerine detaylı açıklamalar
 
----
+İşleme Süreci:
 
-## 🛠 Kullanılan Yöntemler ve Teknolojiler
-- **Generation Model:** Google Gemini API (gemini-2.5-flash)  
-- **Embedding Model:** Google Generative AI Embeddings (text-embedding-004)  
-- **Vektör Veritabanı:** Chroma (`./chroma_db`)  
-- **RAG Pipeline Framework:** LangChain + Google Generative AI API  
+Web sitesinden alınan İngilizce içerik .pdf formatına dönüştürüldü.
 
-**Pipeline Özeti:**  
-1. Kullanıcı sorusu embedding modeli ile vektöre dönüştürülür.  
-2. Chroma veritabanında PDF chunk’ları üzerinden en benzer içerikler aranır.  
-3. Retrieval sonuçları generation modeline iletilir ve Türkçe yanıt üretilir.  
-4. Yanıt, Gradio arayüzü üzerinden kullanıcıya sunulur.
+Dosya Google Drive üzerinde saklandı.
 
----
+Chatbot, PDF içerisindeki metni chunk’lara ayırarak embedding modeli üzerinden vektör veritabanına aktardı.
 
-## ⚙️ Kurulum ve Çalıştırma Kılavuzu
+Kullanıcı Türkçe soru sorduğunda, sistem İngilizce içerikten ilgili bilgileri getirip Türkçe olarak yanıt üretiyor.
 
-1. Colab notebook’unuzu açın.  
-2. Gerekli kütüphaneleri yükleyin:
-```python
+📚 Kaynak Güvenilirliği:
+Veri kaynağı, Kaizen felsefesinin resmi temsilcisi olan Kaizen Institute (https://kaizen.com
+) sitesinden alınmıştır.
+Bu kurum, Kaizen metodolojisinin kurucusu Masaaki Imai tarafından 1985’te kurulmuş olup, 5S ve sürekli iyileştirme alanında dünya çapında en güvenilir otoritedir.
+Bu nedenle veri seti akademik ve kurumsal olarak güvenilir kabul edilmektedir.
+
+⚠️ Not: PDF dosyası ve API anahtarı (Google Gemini) GitHub deposuna dahil edilmemiştir.
+Kod çalıştırıldığında, PDF dosyasının Colab veya lokal ortamda erişilebilir olması gerekmektedir.
+
+🛠 Kullanılan Yöntemler ve Teknolojiler
+
+Generation Model: Google Gemini API (gemini-2.5-flash)
+
+Embedding Model: Google Generative AI Embeddings (text-embedding-004)
+
+Vektör Veritabanı: Chroma (./chroma_db)
+
+Framework: LangChain + Google Generative AI API
+
+Arayüz: Gradio
+
+🔄 Pipeline Özeti
+
+Kullanıcı sorusu embedding modeli ile vektöre dönüştürülür.
+
+Chroma veritabanında PDF parçaları üzerinden en benzer içerikler aranır.
+
+Elde edilen bağlam, Gemini modeline aktarılır ve Türkçe yanıt üretilir.
+
+Sonuç, Gradio arayüzü üzerinden kullanıcıya sunulur.
+
+⚙️ Kurulum ve Çalıştırma Kılavuzu
+
+Google Colab notebook’unuzu açın.
+
+Gerekli kütüphaneleri yükleyin:
+
 !pip install -q pdfplumber tqdm chromadb google-generativeai numpy langchain gradio
 
 
+PDF dosyanızı Google Drive’a yükleyin ve kodda dosya yolunu belirtin.
 
+Notebook’u çalıştırarak chatbot arayüzünü başlatın.
 
+💡 Örnek Sorular (Basitten Zora)
 
-## **💡 Örnek Sorular (Basitten Zora)**
+Bu sorular, chatbot’u test etmek ve 5S & Kaizen bilgi tabanını göstermek için kullanılabilir.
 
+Basit Sorular
 
-Bu sorular, chatbot’u test etmek ve 5S & Kaizen konusundaki bilgi tabanını göstermek için kullanılabilir.
+5S nedir?
 
-### **Basit Sorular**
-- 5S nedir?  
-- Kaizen metodolojisi neyi amaçlar?  
-- 5S’in adımları nelerdir?
+Kaizen metodolojisi neyi amaçlar?
 
-### **Orta Seviye Sorular**
-- 5S uygulamasında en sık yapılan hatalar nelerdir?  
-- Kaizen felsefesini üretim süreçlerine nasıl entegre edebiliriz?  
-- 5S ile iş yeri düzeni ve verimlilik arasındaki ilişki nedir?
+5S’in adımları nelerdir?
 
-### **Zorlayıcı Sorular**
-- Kaizen ve 5S yöntemlerini aynı anda uygularken yaşanan çatışma noktaları nelerdir ve nasıl çözülür?  
-- Bir fabrikanın mevcut süreçlerinde 5S ve Kaizen uygulamalarını optimize etmek için önerdiğiniz somut adımlar nelerdir?  
-- 5S & Kaizen çerçevesinde bir çalışan motivasyon programı nasıl tasarlanır ve ölçümlenir?
+Orta Seviye Sorular
 
+5S uygulamasında en sık yapılan hatalar nelerdir?
 
-## 🏗 **Çözüm Mimarisi**
+Kaizen felsefesini üretim süreçlerine nasıl entegre edebiliriz?
 
-**Pipeline Adımları:**
+5S ile iş yeri düzeni ve verimlilik arasındaki ilişki nedir?
 
-1. **Soru Alımı:** Kullanıcı Gradio arayüzünden sorusunu girer.  
-2. **Embedding & Retrieval:** Sorular embedding modeline gönderilir ve PDF chunk’ları üzerinden en benzer içerikler getirilir.  
-3. **Yanıt Üretimi:** Retrieval sonuçları generation modeline iletilir ve yanıt üretilir.  
-4. **Web Arayüzü:** Üretilen yanıt Gradio üzerinden kullanıcıya sunulur.  
+Zorlayıcı Sorular
 
-**Kullanılan Teknolojiler:**  
+Kaizen ve 5S yöntemlerini aynı anda uygularken yaşanan çatışma noktaları nelerdir ve nasıl çözülür?
+
+Bir fabrikanın mevcut süreçlerinde 5S ve Kaizen uygulamalarını optimize etmek için hangi somut adımlar atılabilir?
+
+5S & Kaizen çerçevesinde bir çalışan motivasyon programı nasıl tasarlanır ve ölçümlenir?
+
+🏗 Çözüm Mimarisi
+Pipeline Adımları
+
+Soru Alımı: Kullanıcı Gradio arayüzünden sorusunu girer.
+
+Embedding & Retrieval: Soru embedding modeline gönderilir ve PDF’ten en benzer içerikler getirilir.
+
+Yanıt Üretimi: Retrieval sonuçları Gemini modeline iletilir ve Türkçe yanıt üretilir.
+
+Arayüz: Yanıt Gradio ekranında kullanıcıya sunulur.
+
+Kullanılan Teknolojiler:
 Google Colab, LangChain, Chroma, Google Gemini API, pdfplumber, Gradio
 
----
+🌐 Web Arayüzü & Deploy
 
-## 🌐 **Web Arayüzü & Deploy**
+Arayüz: Gradio Blocks
 
-- **Arayüz:** Gradio Blocks  
-- **Deploy Linki:** [Buraya deploy linkinizi ekleyin]
+Deploy Linki: [Buraya deploy linkinizi ekleyin]
 
-**Kullanım Adımları:**
+Kullanım Adımları:
 
-1. Web sayfasına gidin.  
-2. Soru kutusuna sorularınızı yazın.  
-3. "🚀 Gönder" butonuna basın.  
-4. Chatbot yanıtını görüntüleyin.
+Web sayfasına gidin.
 
-<h2 style="color:#1F4E79;">📊 Elde Edilen Sonuçlar</h2>
+Soru kutusuna sorularınızı yazın.
 
-<p>Bu projede geliştirdiğimiz RAG tabanlı chatbot ile 5S ve Kaizen içerikli PDF veri setinden bilgi çekerek kullanıcı sorularına bağlamsal yanıtlar üretebiliyoruz. Özet olarak:</p>
+“🚀 Gönder” butonuna basın.
 
-<ul>
-<li>✅ **Bağlamsal Yanıt Üretimi:** Kullanıcı soruları, PDF içeriği üzerinden en uygun chunk’lar referans alınarak yanıtlanıyor.</li>
-<li>✅ **Doğru ve Hedefe Yönelik Bilgi:** Basitten zorlayıcıya sorulara karşılık doğru ve bağlamsal yanıtlar sağlanıyor.</li>
-<li>✅ **Hızlı ve Etkileşimli:** Gradio arayüzü sayesinde sorular anında cevaplanabiliyor.</li>
-<li>✅ **Kolay Deploy ve Paylaşım:** Colab veya Hugging Face Spaces üzerinden hızlıca erişim sağlanabiliyor.</li>
-<li>✅ **Ölçeklenebilir Mimari:** PDF’ler ve veri setleri büyütüldükçe Chroma + RAG pipeline ile chatbot performansı korunuyor.</li>
-</ul>
+Chatbot’un yanıtını görüntüleyin.
 
-<p>💡 Özetle, proje hem **eğitsel bir araç** hem de **5S & Kaizen bilgi tabanı** olarak kullanılabilir. Kullanıcılar sorularına **doğru, hızlı ve bağlamsal yanıtlar** alabiliyor, bu da gerçek bir dijital asistan deneyimi sunuyor.</p>
+📊 Elde Edilen Sonuçlar
 
+Bu projede geliştirdiğimiz RAG tabanlı chatbot ile 5S ve Kaizen içerikli PDF veri setinden bilgi çekerek kullanıcı sorularına bağlamsal ve doğru yanıtlar üretebiliyoruz.
 
+✅ Bağlamsal Yanıt Üretimi: PDF içeriği üzerinden doğru bilgiye dayalı yanıtlar.
+
+✅ Doğru ve Hedefe Yönelik Bilgi: Her seviyeden soruya uygun açıklamalar.
+
+✅ Hızlı ve Etkileşimli Deneyim: Gradio arayüzü ile anında yanıt.
+
+✅ Kolay Deploy: Colab veya Hugging Face Spaces üzerinde kolay erişim.
+
+✅ Ölçeklenebilir Mimari: Yeni PDF’ler ve kaynaklar eklenerek kolay genişleme.
+
+💡 Özetle: Bu proje hem eğitsel bir araç hem de 5S & Kaizen bilgi tabanı olarak kullanılabilir.
+Kullanıcılar sorularına doğru, hızlı ve bağlamsal yanıtlar alarak gerçek bir dijital asistan deneyimi yaşar.
 
 
 
