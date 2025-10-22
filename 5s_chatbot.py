@@ -10,7 +10,6 @@ Original file is located at
 # ============================================
 # 1️⃣ Gerekli kütüphaneler
 # ============================================
-!pip install -q pdfplumber tqdm chromadb google-generativeai numpy langchain gradio
 
 import os
 import pdfplumber
