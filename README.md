@@ -141,5 +141,29 @@ Bu projede geliştirdiğimiz RAG tabanlı chatbot ile 5S ve Kaizen içerikli PDF
 💡 Özetle: Bu proje hem eğitsel bir araç hem de 5S & Kaizen bilgi tabanı olarak kullanılabilir.
 Kullanıcılar sorularına doğru, hızlı ve bağlamsal yanıtlar alarak gerçek bir dijital asistan deneyimi yaşar.
 
+🛠️ Proje Kurulumu ve Teknik Notlar (Mentor Bilgilendirmesi)
+Projenin geliştirilme ve dağıtım sürecinde karşılaşılan önemli teknik zorluklar ve bunların çözümü aşağıda özetlenmiştir.
+
+1. Dosya Yapısı ve Git Senkronizasyonu Notu
+GitHub ve Hugging Face Space arasındaki senkronizasyon manuel olarak yönetilmiştir.
+
+Çözüm: GitHub'da yapılan değişiklikler (örneğin 5s_chatbot.py dosyasındaki düzeltmeler) otomatik olarak Space'e yansımadığı için, her iki ortamdaki dosyalar da manuel olarak güncellenmiştir.
+
+Yanlış Dosya Notu: Depoda bulunan requirements.txt.ipynb dosyası, kurulum için yanlış olan gereksinim listesidir. Doğru kurulum listesi, başarılı bir şekilde kullanılan requirements.txt dosyasındadır. (Yanlış dosya silinemediği için bu not düşülmüştür.)
+
+Ana Uygulama Dosyası: Chatbot uygulamamızın ana kodu, 5s_chatbot.py dosyasıdır.
+
+2. Güvenlik ve Dağıtım (Deployment) Notları
+Projenin çalışması için kritik olan API anahtarı ve RAG sistemi için kullanılan veri dosyası, en güvenli yöntemlerle yönetilmiştir:
+
+Gemini API Anahtarı Güvenliği: API anahtarı, kodun içine yazılmayarak herkese açık olmasının önüne geçilmiştir. Anahtar, Hugging Face platformunun sağladığı Secrets (Gizli Anahtarlar) bölümüne kaydedilmiştir. Bu sayede anahtar, sadece uygulama çalışırken çağrılmakta ve güvenlik riski ortadan kalkmaktadır.
+
+Veri Dosyası Konumu: RAG sisteminin bilgi kaynağı olan PDF dosyası, dosya yolu sorunlarını ve Drive bağımlılığını ortadan kaldırmak için doğrudan Hugging Face Space ortamına yüklenmiştir.
+
+3. Çalışma Ortamı Uyumsuzluklarının Çözümü
+Proje, Google Colab ortamında geliştirildiği için, dağıtım sırasında bazı ortam uyumsuzlukları oluşmuştur. Bunlar başarıyla çözülmüştür:
+
+Çözüm: Colab'a özel olan tüm !pip install, from google.colab import drive ve from google.colab import userdata komutları, uygulamanın Hugging Face'in Linux tabanlı ortamında hatasız çalışması için kaldırılmış/değiştirilmiştir.
+
 
 
