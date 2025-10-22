@@ -1,0 +1,7 @@
+gradio
+langchain
+chromadb
+google-generativeai
+pdfplumber
+numpy
+tqdm
