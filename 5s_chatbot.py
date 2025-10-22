@@ -157,4 +157,4 @@ with gr.Blocks(theme=gr.themes.Soft()) as chat_demo:
 
     submit_btn.click(chat_fn, inputs=[user_input, chat_box], outputs=chat_box)
 
-chat_demo.launch(debug=True, share=True)
+chat_demo.launch()
