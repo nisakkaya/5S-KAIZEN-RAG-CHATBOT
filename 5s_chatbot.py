@@ -30,16 +30,17 @@ EMBED_MODEL = "models/text-embedding-004"
 LLM_MODEL = "models/gemini-2.5-flash"
 
 
-# 2️⃣ PDF dosya yolunu ayarla
-pdf_path = pdf_path = 'The Ultimate Guide to 5S and 5S Training _ KAIZEN™ Article.pdf'
+# 2️⃣ PDF dosya yolunu ayarla ve PDF'i oku ve chunk'lara böl
+pdf_files = [
+    'How 5S Can Improve Workplace Safety, Quality, and Processes - isixsigma.com.pdf',               
+    'The Ultimate Guide to 5S and 5S Training _ KAIZEN™ Article.pdf',
+    'Toyota Production System _ Vision & Philosophy _ Company _ Toyota Motor Corporation Official Global Website.pdf_5s.pdf'
+]
 
-# 3️⃣ PDF'i oku ve chunk'lara böl
-import pdfplumber
-
-with pdfplumber.open(pdf_path) as pdf:
-    text = "\n".join([page.extract_text() for page in pdf.pages if page.extract_text()])
-
-def chunk_text(text, size=500, overlap=50):
+# PDF'den metin okuma ve chunklama
+def load_and_chunk_pdf(pdf_path, size=500, overlap=50):
+    with pdfplumber.open(pdf_path) as pdf:
+        text = "\n".join([page.extract_text() for page in pdf.pages if page.extract_text()])
     tokens = text.split()
     chunks = []
     i = 0
@@ -48,8 +49,11 @@ def chunk_text(text, size=500, overlap=50):
         i += size - overlap
     return chunks
 
-chunks = chunk_text(text)
-print(f"📄 PDF {len(chunks)} chunk'a bölündü.")
+texts = []
+for path in pdf_files:
+    if os.path.exists(path):
+        texts.extend(load_and_chunk_pdf(path))
+print(f"📚 {len(pdf_files)} PDF dosyasından toplam {
 
 
 # ============================================
@@ -60,60 +64,59 @@ client = chromadb.PersistentClient(path="./chroma_db")
 collection = client.get_or_create_collection(name=collection_name)
 
 if collection.count() == 0:
-    print("⏳ Embeddingler oluşturuluyor ve Chroma'ya ekleniyor...")
-    for i, chunk in enumerate(chunks):
+    print("⏳ Embeddingler oluşturuluyor...")
+    for i, chunk in enumerate(texts):
         try:
-            result = genai.embed_content(model=EMBED_MODEL, content=chunk)
-            emb = np.array(result["embedding"], dtype="float32")
+            emb = np.array(
+                genai.embed_content(model=EMBED_MODEL, content=chunk)["embedding"],
+                dtype="float32"
+            )
             collection.add(
                 documents=[chunk],
                 embeddings=[emb.tolist()],
                 metadatas=[{"chunk_id": i}],
                 ids=[str(i)]
             )
-            time.sleep(0.1)  # rate limit önleme
+            time.sleep(0.05)
         except Exception as e:
-            print(f"⚠️ Chunk {i} embedding hatası:", e)
-    print("✅ Embeddingler başarıyla oluşturuldu.")
+            print(f"⚠️ Chunk {i} embedding hatası: {e}")
+    print("✅ Embeddingler tamamlandı.")
 else:
-    print("✅ Chroma veritabanı zaten dolu, yükleniyor.")
+    print("✅ Var olan embeddingler yüklendi.")
 
 # ============================================
 # 5️⃣ Retrieval fonksiyonu
 # ============================================
-def retrieve(query, top_k=2):
-    try:
-        query_emb = np.array(
-            genai.embed_content(model=EMBED_MODEL, content=query)["embedding"],
-            dtype="float32"
-        )
-        results = collection.query(
-            query_embeddings=[query_emb.tolist()],
-            n_results=top_k
-        )
-        docs = results.get("documents", [[]])[0]
-        return docs
-    except Exception as e:
-        print("⚠️ Retrieval hatası:", e)
-        return []
+def retrieve(query, top_k=8, min_score=None):
+    query_emb = np.array(
+        genai.embed_content(model=EMBED_MODEL, content=query)["embedding"],
+        dtype="float32"
+    )
+    results = collection.query(query_embeddings=[query_emb.tolist()], n_results=top_k)
+    docs = results.get("documents", [[]])[0]
+    if min_score and "distances" in results:
+        docs = [
+            d for d, s in zip(docs, results["distances"][0])
+            if s <= min_score
+        ]
+    return docs
 
 # ============================================
 # 6️⃣ LLM ile cevap üretimi
 # ============================================
-from google.generativeai import GenerativeModel
 model = genai.GenerativeModel(LLM_MODEL)
 
-def answer_query(query, top_k=2):
-    context_docs = retrieve(query, top_k)
-    if not context_docs:
+def answer_query(query):
+    docs = retrieve(query, top_k=8)
+    if not docs:
         return "⚠️ İlgili bilgi bulunamadı."
-
-    context_text = "\n\n".join(context_docs)
+    context = "\n\n".join(docs)
     prompt = f"""
-Aşağıdaki bağlamı kullanarak kullanıcı sorusuna Türkçe olarak net bir cevap ver.
+Aşağıdaki bağlamı kullanarak kullanıcı sorusuna Türkçe olarak açıklayıcı, profesyonel bir cevap ver.
+Önemli noktaları madde madde belirt.
 
 Bağlam:
-{context_text}
+{context}
 
 Soru:
 {query}
@@ -129,25 +132,49 @@ Cevap:
 # ============================================
 # 7️⃣ Gradio arayüzü
 # ============================================
-import gradio as gr
-
-# Chat fonksiyonu
 def chat_fn(message, history):
-    reply = answer_query(message)  # RAG + LLM fonksiyonu
-    if "ilgili bilgi bulunamadı" in reply:
-        reply += "\n\n💡 Genel Bilgi: 5S uygulamalarında sık yapılan hatalar; standartları güncel tutmamak, görsel yönetimi ihmal etmek, çalışanları eğitmemek, düzeni sürdürememek gibi durumlar olabilir."
+    reply = answer_query(message)
+    if "İlgili bilgi bulunamadı" in reply:
+        reply += "\n\n💡 Genel Bilgi: 5S uygulamalarında standartlaşmayı sürdürememek, görsel yönetimi ihmal etmek ve çalışan katılımını az tutmak yaygın hatalardandır."
     history.append((message, reply))
     return history
 
-# Arayüz
-with gr.Blocks(theme=gr.themes.Soft()) as chat_demo:
-    gr.Markdown("## 💬 5S & Kaizen Öğretici Chatbot")
-    gr.Markdown("Sorunu yaz ve gönder!")
+with gr.Blocks(theme=gr.themes.Monochrome()) as demo:
+    gr.Markdown(
+        """
+        # 🧠 5S & Kaizen Bilgi Asistanı  
+        **RAG Tabanlı Yapay Zeka Chatbot**
+        > 📘 Kaynaklar: Kaizen Institute,Toyota Production System, iSixSigma
+        """
+    )
 
-    chat_box = gr.Chatbot(label="Sohbet")
-    user_input = gr.Textbox(placeholder="Sorunu yaz...")
-    submit_btn = gr.Button("🚀 Gönder")
+# Görsel ekleme
+    gr.Image("/content/5s-kaizen-slide1.png", elem_id="5s-gorsel", interactive=False)
+
+    with gr.Row():
+        with gr.Column(scale=3):
+            chat_box = gr.Chatbot(label="💬 Sohbet Penceresi", height=450)
+            with gr.Row():
+                user_input = gr.Textbox(
+                    placeholder="Sorunu buraya yaz...",
+                    show_label=False,
+                    scale=4
+                )
+                submit_btn = gr.Button("🚀 Gönder", scale=1)
+        with gr.Column(scale=1):
+            gr.Markdown("### 🔍 Örnek Sorular:")
+            gr.Examples(
+                examples=[
+                    ["5S nedir?"],
+                    ["Kaizen felsefesi neyi amaçlar?"],
+                    ["5S adımlarını açıklar mısın?"],
+                    ["Bir üretim hattında 5S nasıl uygulanır?"],
+                ],
+                inputs=[user_input]
+            )
+            gr.Markdown("### 📊 Kaynaklar:")
+            gr.Markdown("- Kaizen Institute\n- Toyota Production System\n- iSixSigma")
 
     submit_btn.click(chat_fn, inputs=[user_input, chat_box], outputs=chat_box)
 
-chat_demo.launch()
+demo.launch()
