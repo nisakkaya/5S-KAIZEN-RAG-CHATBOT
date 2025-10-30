@@ -6,17 +6,18 @@ Amaç, 5S ve Kaizen metodolojileri ile ilgili bilgileri dinamik ve güvenilir bi
 
 📄 Veri Seti Hakkında
 
-Kaynak: Kaizen Institute – The Ultimate Guide to 5S and 5S Training (KAIZEN™ Article)
-
+Kaynak: The Ultimate Guide to 5S and 5S Training _ KAIZEN™ Article.pdf
+        How 5S Can Improve Workplace Safety, Quality, and Processes - isixsigma.com.pdf
+        Toyota Production System _ Vision & Philosophy _ Company _ Toyota Motor Corporation Official Global Website.pdf_5s.pdf'
+        5s-kaizen-slide1.png
+        
 Dil: İngilizce
 
 Kapsam: 5S adımları, uygulama yöntemleri, Kaizen felsefesi ve iş yeri verimliliği üzerine detaylı açıklamalar
 
 İşleme Süreci:
 
-Web sitesinden alınan İngilizce içerik .pdf formatına dönüştürüldü.
-
-Dosya Google Drive üzerinde saklandı.
+Web sitesinden alınan içerik .pdf formatına dönüştürüldü.
 
 Chatbot, PDF içerisindeki metni chunk’lara ayırarak embedding modeli üzerinden vektör veritabanına aktardı.
 
