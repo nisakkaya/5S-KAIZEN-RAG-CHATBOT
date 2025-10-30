@@ -53,7 +53,7 @@ texts = []
 for path in pdf_files:
     if os.path.exists(path):
         texts.extend(load_and_chunk_pdf(path))
-print(f"📚 {len(pdf_files)} PDF dosyasından toplam {
+print(f"📚 {len(pdf_files)} PDF dosyasından toplam {len(texts)} chunk oluşturuldu.")
 
 
 # ============================================
